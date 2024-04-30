@@ -1,4 +1,5 @@
 import 'package:blog/data.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -36,10 +37,17 @@ class MyApp extends StatelessWidget {
           // tested with just a hot reload.
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
+            headlineMedium: TextStyle(
+              fontFamily: defaultFontFamily,
+              fontSize: 24,
+              color: primaryTextColor,
+              fontWeight: FontWeight.w700
+            ),
               titleMedium: TextStyle(
                 color: secondryTextColor,
                 fontFamily: defaultFontFamily,
-                fontSize: 15,
+                fontWeight: FontWeight.w200,
+                fontSize: 18,
               ),
               titleLarge: TextStyle(
                   fontFamily: defaultFontFamily,
@@ -84,8 +92,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     Image.asset(
                       'assets/img/icons/notification.png',
-                      width: 40,
-                      height: 40,
+                      width: 32,
+                      height: 32,
                     ),
                   ],
                 ),
@@ -94,73 +102,131 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
                 child: Text(
                   'Explore Today\'s',
-                  style: themeData.textTheme.titleLarge,
+                  style: themeData.textTheme.headlineMedium,
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 110,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.fromLTRB(32, 8, 32, 0),
-                    itemCount: stories.length,
-                    itemBuilder: (context, index) {
-                      final story = stories[index];
-                      return Container(
-                        margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  width: 68,
-                                  height: 68,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(24),
-                                      gradient: LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          colors: [
-                                            Color(0xff376AED),
-                                            Color(0xff49B0E2),
-                                            Color(0xff9CECFB),
-                                          ])),
-                                  child: Container(
-                                    margin: EdgeInsets.all(3),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    padding: EdgeInsets.all(3),
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Image.asset(
-                                            'assets/img/stories/${story.imageFileName}')),
-                                  ),
-                                  // child: Image.asset('assets/img/stories/story_01.jpg'),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Image.asset(
-                                      'assets/img/icons/${story.iconFileName}',
-                                      width: 30,
-                                      height: 30,),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            Text(story.name),
-                          ],
-                        ),
-                      );
-                    }),
-              )
+              _StoryList(stories: stories)
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class _StoryList extends StatelessWidget {
+  const _StoryList({
+    super.key,
+    required this.stories,
+  });
+
+  final List<StoryData> stories;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 110,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(32, 8, 32, 0),
+          itemCount: stories.length,
+          itemBuilder: (context, index) {
+            final story = stories[index];
+            return _Story(story: story);
+          }),
+    );
+  }
+}
+
+class _Story extends StatelessWidget {
+  const _Story({
+    super.key,
+    required this.story,
+  });
+
+  final StoryData story;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              // _profileImageVisited(context),
+              story.isViewed
+                  ? _profileImageVisited()
+                  : _profileImageNormal(),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: Image.asset(
+                  'assets/img/icons/${story.iconFileName}',
+                  width: 30,
+                  height: 30,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(story.name),
+        ],
+      ),
+    );
+  }
+
+  Container _profileImageNormal() {
+    return Container(
+      width: 68,
+      height: 68,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          gradient: LinearGradient(begin: Alignment.topLeft, colors: [
+            Color(0xff376AED),
+            Color(0xff49B0E2),
+            Color(0xff9CECFB),
+          ])),
+      child: Container(
+        margin: EdgeInsets.all(3),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(21)),
+        padding: EdgeInsets.all(3),
+        child: _profileImage(),
+      ),
+      // child: Image.asset('assets/img/stories/story_01.jpg'),
+    );
+  }
+
+  Widget _profileImageVisited() {
+    return SizedBox(
+      width: 68,
+      height: 68,
+      child: DottedBorder(
+        borderType: BorderType.RRect,
+        strokeWidth: 2,
+        radius: Radius.circular(24),
+        padding: EdgeInsets.all(4),
+        color: Color(0xff7b8bb2),
+        dashPattern: [8, 3, 5, 3], // [width, gap]
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: _profileImage(),
+          // child: Image.asset('assets/img/stories/story_01.jpg'),
+        ),
+      ),
+    );
+  }
+
+  Widget _profileImage() {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(21),
+        child: Image.asset('assets/img/stories/${story.imageFileName}'));
   }
 }
