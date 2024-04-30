@@ -1,5 +1,6 @@
 import 'package:blog/data.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,12 +38,11 @@ class MyApp extends StatelessWidget {
           // tested with just a hot reload.
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
-            headlineMedium: TextStyle(
-              fontFamily: defaultFontFamily,
-              fontSize: 24,
-              color: primaryTextColor,
-              fontWeight: FontWeight.w700
-            ),
+              headlineMedium: TextStyle(
+                  fontFamily: defaultFontFamily,
+                  fontSize: 24,
+                  color: primaryTextColor,
+                  fontWeight: FontWeight.w700),
               titleMedium: TextStyle(
                 color: secondryTextColor,
                 fontFamily: defaultFontFamily,
@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
               titleLarge: TextStyle(
                   fontFamily: defaultFontFamily,
                   fontWeight: FontWeight.bold,
+                  fontSize: 18,
                   color: primaryTextColor),
               bodyMedium: TextStyle(
                 fontFamily: defaultFontFamily,
@@ -105,11 +106,103 @@ class HomeScreen extends StatelessWidget {
                   style: themeData.textTheme.headlineMedium,
                 ),
               ),
-              _StoryList(stories: stories)
+              _StoryList(stories: stories),
+              _CategoryList(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CategoryList extends StatelessWidget {
+  const _CategoryList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = AppDatabase.categories;
+    return CarouselSlider.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index, realIndex) {
+          return _CategoryItem(
+            category: categories[realIndex],
+          );
+        },
+        options: CarouselOptions(
+          padEnds: true,
+          scrollDirection: Axis.horizontal,
+          viewportFraction: 0.8,
+          aspectRatio: 1.2,
+          initialPage: 0,
+          disableCenter: false,
+          scrollPhysics: const BouncingScrollPhysics(),
+          enableInfiniteScroll: false,
+          enlargeCenterPage: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.height,
+          // enableInfiniteScroll: true,
+        ));
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final Category category;
+  const _CategoryItem({
+    super.key,
+    required this.category,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 100,
+          right: 56,
+          left: 56,
+          bottom: 16,
+          child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(blurRadius: 20,color: Color(0xaa0D253C))
+            ]
+          ),
+        ),),
+        Positioned.fill(
+          child: Container(
+            margin: EdgeInsets.all(8),
+            foregroundDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.center,
+                  colors: [Color(0xff0D253C), Colors.transparent]),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(32),
+                child: Image.asset(
+                  'assets/img/posts/large/${category.imageFileName}',
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+        Positioned(
+          bottom: 48,
+          left: 42,
+            child: Text(
+          category.title,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .apply(color: Colors.white),
+        ))
+      ],
     );
   }
 }
@@ -157,9 +250,7 @@ class _Story extends StatelessWidget {
           Stack(
             children: [
               // _profileImageVisited(context),
-              story.isViewed
-                  ? _profileImageVisited()
-                  : _profileImageNormal(),
+              story.isViewed ? _profileImageVisited() : _profileImageNormal(),
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -230,3 +321,4 @@ class _Story extends StatelessWidget {
         child: Image.asset('assets/img/stories/${story.imageFileName}'));
   }
 }
+
