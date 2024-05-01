@@ -1,4 +1,5 @@
 import 'package:blog/data.dart';
+import 'package:blog/gen/assets.gen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +12,7 @@ void main() {
     statusBarColor: Colors.white,
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarColor: Colors.white,
-    systemNavigationBarIconBrightness: Brightness.dark, 
+    systemNavigationBarIconBrightness: Brightness.dark,
   ));
   runApp(const MyApp());
 }
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
     final primaryTextColor = Color(0xff0D253C);
     final secondryTextColor = Color(0xff2D4379);
     final primaryColor = Color(0xff376AED);
+// Assets.img.
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -135,11 +138,12 @@ class HomeScreen extends StatelessWidget {
                       'Hi, User\'s Name!',
                       style: themeData.textTheme.titleMedium,
                     ),
-                    Image.asset(
-                      'assets/img/icons/notification.png',
-                      width: 32,
-                      height: 32,
-                    ),
+                    Assets.img.icons.notification.image(width: 32, height: 32)
+                    // Image.asset(
+                    //   'assets/img/icons/notification.png',
+                    //   width: 32,
+                    //   height: 32,
+                    // ),
                   ],
                 ),
               ),
@@ -530,11 +534,25 @@ class _BottomNavigation extends StatelessWidget {
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _BottomNavigationItem(iconFileName: 'Home.png', activeIconFileName: 'Home.png', title: 'Home'),
-                  _BottomNavigationItem(iconFileName: 'Articles.png', activeIconFileName: 'Articles.png', title: 'Articles'),
-                  SizedBox(width: 8,),
-                  _BottomNavigationItem(iconFileName: 'Search.png', activeIconFileName: 'Search.png', title: 'Search'),
-                  _BottomNavigationItem(iconFileName: 'Menu.png', activeIconFileName: 'Menu.png', title: 'Menu'),
+                  _BottomNavigationItem(
+                      iconFileName: 'Home.png',
+                      activeIconFileName: 'Home.png',
+                      title: 'Home'),
+                  _BottomNavigationItem(
+                      iconFileName: 'Articles.png',
+                      activeIconFileName: 'Articles.png',
+                      title: 'Articles'),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  _BottomNavigationItem(
+                      iconFileName: 'Search.png',
+                      activeIconFileName: 'Search.png',
+                      title: 'Search'),
+                  _BottomNavigationItem(
+                      iconFileName: 'Menu.png',
+                      activeIconFileName: 'Menu.png',
+                      title: 'Menu'),
                 ],
               ),
             ),
@@ -547,10 +565,9 @@ class _BottomNavigation extends StatelessWidget {
               child: Container(
                   height: 65,
                   decoration: BoxDecoration(
-                    color: Color(0xff376AED),
-                    borderRadius: BorderRadius.circular(32.5),
-                    border: Border.all(color: Colors.white, width: 4)
-                  ),
+                      color: Color(0xff376AED),
+                      borderRadius: BorderRadius.circular(32.5),
+                      border: Border.all(color: Colors.white, width: 4)),
                   child: Image.asset('assets/img/icons/plus.png')),
             ),
           )
