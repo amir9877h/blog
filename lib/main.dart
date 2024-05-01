@@ -48,7 +48,17 @@ class MyApp extends StatelessWidget {
           //
           // This works for code too, not just values: Most code changes can be
           // tested with just a hot reload.
-          primarySwatch: Colors.blue,
+
+          colorScheme: ColorScheme.light(
+            primary: primaryColor,
+            onPrimary: Colors.white,
+            onSurface: primaryTextColor,
+            onBackground: primaryTextColor,
+            surface: Colors.white,
+            background: Color(0xffFBFCFF),
+          ),
+          // primarySwatch: Colors.blue,
+
           textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                   foregroundColor: Colors.lightBlue,
@@ -115,7 +125,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class _BottomNavigation extends StatelessWidget {
   @override
