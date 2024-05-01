@@ -3,9 +3,16 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.dark, 
+  ));
   runApp(const MyApp());
 }
 
@@ -82,6 +89,11 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                   color: primaryTextColor),
+              bodySmall: TextStyle(
+                  fontFamily: defaultFontFamily,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff7B8BB2),
+                  fontSize: 10),
               bodyMedium: TextStyle(
                 fontFamily: defaultFontFamily,
                 color: secondryTextColor,
@@ -90,7 +102,10 @@ class MyApp extends StatelessWidget {
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           // useMaterial3: true,
           ),
-      home: const HomeScreen(),
+      home: Stack(children: [
+        Positioned.fill(child: const HomeScreen()),
+        Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation()),
+      ]),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -491,6 +506,85 @@ class _Post extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _BottomNavigation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 85,
+      child: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Container(
+              height: 65,
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    blurRadius: 20, color: Color(0x9B8487).withOpacity(0.3))
+              ]),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _BottomNavigationItem(iconFileName: 'Home.png', activeIconFileName: 'Home.png', title: 'Home'),
+                  _BottomNavigationItem(iconFileName: 'Articles.png', activeIconFileName: 'Articles.png', title: 'Articles'),
+                  SizedBox(width: 8,),
+                  _BottomNavigationItem(iconFileName: 'Search.png', activeIconFileName: 'Search.png', title: 'Search'),
+                  _BottomNavigationItem(iconFileName: 'Menu.png', activeIconFileName: 'Menu.png', title: 'Menu'),
+                ],
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: 65,
+              height: 85,
+              alignment: Alignment.topCenter,
+              child: Container(
+                  height: 65,
+                  decoration: BoxDecoration(
+                    color: Color(0xff376AED),
+                    borderRadius: BorderRadius.circular(32.5),
+                    border: Border.all(color: Colors.white, width: 4)
+                  ),
+                  child: Image.asset('assets/img/icons/plus.png')),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _BottomNavigationItem extends StatelessWidget {
+  final String iconFileName;
+  final String activeIconFileName;
+  final String title;
+
+  const _BottomNavigationItem(
+      {super.key,
+      required this.iconFileName,
+      required this.activeIconFileName,
+      required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset('assets/img/icons/$iconFileName'),
+        SizedBox(
+          height: 4,
+        ),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
     );
   }
 }
