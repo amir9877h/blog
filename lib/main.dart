@@ -153,39 +153,96 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int selectedBottomNavigationIndex = homeIndex;
+
+  final List<int> _history = [];
+
+  GlobalKey<NavigatorState> _homeKey = GlobalKey();
+  GlobalKey<NavigatorState> _articleKey = GlobalKey();
+  GlobalKey<NavigatorState> _searchKey = GlobalKey();
+  GlobalKey<NavigatorState> _profileKey = GlobalKey();
+
+  late final map = {
+    homeIndex: _homeKey,
+    articleIndex: _articleKey,
+    searchIndex: _searchKey,
+    menuIndex: _profileKey
+  };
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(children: [
-        Positioned.fill(
-          bottom: bottomNavigationHeight,
-          child: IndexedStack(
-            index: selectedBottomNavigationIndex,
-            children: [
-              HomeScreen(),
-              ArticleScreen(),
-              SearchScreen(),
-              ProfileScreen(),
-            ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        final NavigatorState currentSelectedTabNavigatorState =
+            map[selectedBottomNavigationIndex]!.currentState!;
+
+        if (currentSelectedTabNavigatorState.canPop()) {
+          currentSelectedTabNavigatorState.pop();
+        } else if (_history.isNotEmpty) {
+          setState(() {
+            selectedBottomNavigationIndex = _history.last;
+            _history.removeLast();
+          });
+        } else {
+          SystemNavigator.pop();
+        }
+      },
+      child: Scaffold(
+        body: Stack(children: [
+          Positioned.fill(
+            bottom: bottomNavigationHeight,
+            child: IndexedStack(
+              index: selectedBottomNavigationIndex,
+              children: [
+                Navigator(
+                  key: _homeKey,
+                  onGenerateRoute: (settings) =>
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                ),
+                Navigator(
+                  key: _articleKey,
+                  onGenerateRoute: (settings) =>
+                      MaterialPageRoute(builder: (context) => ArticleScreen()),
+                ),
+                Navigator(
+                  key: _searchKey,
+                  onGenerateRoute: (settings) =>
+                      MaterialPageRoute(builder: (context) => SearchScreen()),
+                ),
+                Navigator(
+                  key: _profileKey,
+                  onGenerateRoute: (settings) =>
+                      MaterialPageRoute(builder: (context) => ProfileScreen()),
+                ),
+                // HomeScreen(),
+                // ArticleScreen(),
+                // SearchScreen(),
+                // ProfileScreen(),
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: _BottomNavigation(
-            selectedIndex: selectedBottomNavigationIndex,
-            onTap: (int index) {
-              setState(() {
-                selectedBottomNavigationIndex = index;
-              });
-            },
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: _BottomNavigation(
+              selectedIndex: selectedBottomNavigationIndex,
+              onTap: (int index) {
+                setState(() {
+                  _history.remove(selectedBottomNavigationIndex);
+                  _history.add(selectedBottomNavigationIndex);
+                  selectedBottomNavigationIndex = index;
+                });
+              },
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
+
+int screenNumber = 1;
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -193,7 +250,16 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Search Screen Coming Soon!'),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text('Search Screen Coming Soon!\n#$screenNumber'),
+        ElevatedButton(
+            onPressed: () {
+              screenNumber++;
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SearchScreen()));
+            },
+            child: Text('Increase ME!'))
+      ]),
     );
   }
 }

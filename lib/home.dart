@@ -1,3 +1,4 @@
+import 'package:blog/article.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
 import 'package:blog/main.dart';
@@ -309,99 +310,104 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(blurRadius: 10, color: Color(0x1a5282ff))],
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child:
-                  Image.asset('assets/img/posts/small/${post.imageFileName}', width: 120,)),
-          SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post.caption,
-                  style: TextStyle(
-                      fontFamily: MyApp.defaultFontFamily,
-                      color: Color(0xff376AED),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14),
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Text(
-                  post.title,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Icon(
-                      CupertinoIcons.hand_thumbsup,
-                      size: 16,
-                      color: Theme.of(context).textTheme.bodyMedium!.color,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      post.likes,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Icon(
-                      CupertinoIcons.clock,
-                      size: 16,
-                      color: Theme.of(context).textTheme.bodyMedium!.color,
-                    ),
-                    SizedBox(
-                      width: 4,
-                    ),
-                    Text(
-                      post.time,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    Expanded(
-                        child: Container(
-                      margin: EdgeInsets.only(right: 16),
-                      alignment: Alignment.centerRight,
-                      child: post.isBookmarked
-                          ? Icon(
-                              CupertinoIcons.bookmark_fill,
-                              size: 16,
-                              color:
-                                  Theme.of(context).textTheme.bodyMedium!.color,
-                            )
-                          : Icon(
-                              CupertinoIcons.bookmark,
-                              size: 16,
-                              color:
-                                  Theme.of(context).textTheme.bodyMedium!.color,
-                            ),
-                    ))
-                  ],
-                )
-              ],
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ArticleScreen()));
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [BoxShadow(blurRadius: 10, color: Color(0x1a5282ff))],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child:
+                    Image.asset('assets/img/posts/small/${post.imageFileName}', width: 120,)),
+            SizedBox(
+              width: 16,
             ),
-          )
-        ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    post.caption,
+                    style: TextStyle(
+                        fontFamily: MyApp.defaultFontFamily,
+                        color: Color(0xff376AED),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14),
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    post.title,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Icon(
+                        CupertinoIcons.hand_thumbsup,
+                        size: 16,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        post.likes,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Icon(
+                        CupertinoIcons.clock,
+                        size: 16,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                      SizedBox(
+                        width: 4,
+                      ),
+                      Text(
+                        post.time,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Expanded(
+                          child: Container(
+                        margin: EdgeInsets.only(right: 16),
+                        alignment: Alignment.centerRight,
+                        child: post.isBookmarked
+                            ? Icon(
+                                CupertinoIcons.bookmark_fill,
+                                size: 16,
+                                color:
+                                    Theme.of(context).textTheme.bodyMedium!.color,
+                              )
+                            : Icon(
+                                CupertinoIcons.bookmark,
+                                size: 16,
+                                color:
+                                    Theme.of(context).textTheme.bodyMedium!.color,
+                              ),
+                      ))
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
