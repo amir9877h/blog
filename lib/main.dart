@@ -1,6 +1,7 @@
 import 'package:blog/article.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
+import 'package:blog/profile.dart';
 import 'package:blog/splash.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -129,7 +130,7 @@ class MyApp extends StatelessWidget {
       //   Positioned.fill(child: const HomeScreen()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation()),
       // ]),
-      home: ArticleScreen(),
+      home: ProfileScreen(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
