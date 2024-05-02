@@ -1,3 +1,4 @@
+import 'package:blog/auth.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
 import 'package:blog/home.dart';
@@ -111,7 +112,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             onPressed: () {
                               if (page == items.length - 1) {
                                 Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => HomeScreen())
+                                MaterialPageRoute(builder: (context) => AuthScreen())
                               );
                               }else{
                                 _pageController.animateToPage(page + 1, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
