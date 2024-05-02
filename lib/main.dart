@@ -194,26 +194,15 @@ class _MainScreenState extends State<MainScreen> {
             child: IndexedStack(
               index: selectedBottomNavigationIndex,
               children: [
-                Navigator(
-                  key: _homeKey,
-                  onGenerateRoute: (settings) =>
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                ),
-                Navigator(
-                  key: _articleKey,
-                  onGenerateRoute: (settings) =>
-                      MaterialPageRoute(builder: (context) => ArticleScreen()),
-                ),
-                Navigator(
-                  key: _searchKey,
-                  onGenerateRoute: (settings) =>
-                      MaterialPageRoute(builder: (context) => SearchScreen()),
-                ),
-                Navigator(
-                  key: _profileKey,
-                  onGenerateRoute: (settings) =>
-                      MaterialPageRoute(builder: (context) => ProfileScreen()),
-                ),
+                _navigator(_homeKey, homeIndex, HomeScreen()),
+                _navigator(_articleKey, articleIndex, ArticleScreen()),
+                _navigator(
+                    _searchKey,
+                    searchIndex,
+                    SearchScreen(
+                      tabName: 'Search',
+                    )),
+                _navigator(_profileKey, menuIndex, ProfileScreen()),
                 // HomeScreen(),
                 // ArticleScreen(),
                 // SearchScreen(),
@@ -240,23 +229,39 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
+
+  Widget _navigator(GlobalKey key, int index, Widget child) {
+    return key.currentState == null && selectedBottomNavigationIndex != index
+        ? Container()
+        : Navigator(
+            key: key,
+            onGenerateRoute: (settings) => MaterialPageRoute(
+                builder: (context) => Offstage(
+                    offstage: selectedBottomNavigationIndex != index,
+                    child: child)),
+          );
+  }
 }
 
-int screenNumber = 1;
+// int screenNumber = 1;
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
+  const SearchScreen({super.key, required this.tabName, this.screenNumber = 1});
+  final String tabName;
+  final int screenNumber;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text('Search Screen Coming Soon!\n#$screenNumber'),
+        Text('Search Screen Coming Soon!\n#$screenNumber\ntab: $tabName'),
         ElevatedButton(
             onPressed: () {
-              screenNumber++;
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SearchScreen()));
+              // screenNumber++;
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => SearchScreen(
+                        tabName: tabName,
+                        screenNumber: screenNumber + 1,
+                      )));
             },
             child: Text('Increase ME!'))
       ]),
