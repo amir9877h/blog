@@ -1,3 +1,4 @@
+import 'package:blog/article.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
 import 'package:blog/splash.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // primaryColor: primaryColor,
+          // primaryColor: primaryColor,
           // This is the theme of your application.
           //
           // TRY THIS: Try running your application with "flutter run". You'll see
@@ -49,7 +50,14 @@ class MyApp extends StatelessWidget {
           //
           // This works for code too, not just values: Most code changes can be
           // tested with just a hot reload.
-
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: primaryColor,
+          ),
+          appBarTheme: AppBarTheme(
+              titleSpacing: 32,
+              // elevation: 0, //for removing shadow
+              backgroundColor: Colors.white,
+              foregroundColor: primaryTextColor),
           colorScheme: ColorScheme.light(
             primary: primaryColor,
             onPrimary: Colors.white,
@@ -121,7 +129,7 @@ class MyApp extends StatelessWidget {
       //   Positioned.fill(child: const HomeScreen()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation()),
       // ]),
-      home: SplashScreen(),
+      home: ArticleScreen(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
