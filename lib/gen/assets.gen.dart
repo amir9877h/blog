@@ -42,9 +42,8 @@ class $AssetsImgBackgroundGen {
 class $AssetsImgIconsGen {
   const $AssetsImgIconsGen();
 
-  /// File path: assets/img/icons/Articles.png
-  AssetGenImage get articles =>
-      const AssetGenImage('assets/img/icons/Articles.png');
+  /// File path: assets/img/icons/Article.svg
+  SvgGenImage get article => const SvgGenImage('assets/img/icons/Article.svg');
 
   /// File path: assets/img/icons/Facebook.png
   AssetGenImage get facebook =>
@@ -57,18 +56,17 @@ class $AssetsImgIconsGen {
   /// File path: assets/img/icons/Grid.svg
   SvgGenImage get grid => const SvgGenImage('assets/img/icons/Grid.svg');
 
-  /// File path: assets/img/icons/Home.png
-  AssetGenImage get home => const AssetGenImage('assets/img/icons/Home.png');
+  /// File path: assets/img/icons/Home.svg
+  SvgGenImage get home => const SvgGenImage('assets/img/icons/Home.svg');
 
   /// File path: assets/img/icons/LOGO.svg
   SvgGenImage get logo => const SvgGenImage('assets/img/icons/LOGO.svg');
 
-  /// File path: assets/img/icons/Menu.png
-  AssetGenImage get menu => const AssetGenImage('assets/img/icons/Menu.png');
+  /// File path: assets/img/icons/Menu.svg
+  SvgGenImage get menu => const SvgGenImage('assets/img/icons/Menu.svg');
 
-  /// File path: assets/img/icons/Search.png
-  AssetGenImage get search =>
-      const AssetGenImage('assets/img/icons/Search.png');
+  /// File path: assets/img/icons/Search.svg
+  SvgGenImage get search => const SvgGenImage('assets/img/icons/Search.svg');
 
   /// File path: assets/img/icons/Table.svg
   SvgGenImage get table => const SvgGenImage('assets/img/icons/Table.svg');
@@ -105,7 +103,7 @@ class $AssetsImgIconsGen {
 
   /// List of all assets
   List<dynamic> get values => [
-        articles,
+        article,
         facebook,
         google,
         grid,

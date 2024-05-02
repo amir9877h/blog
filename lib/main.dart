@@ -1,6 +1,7 @@
 import 'package:blog/article.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
+import 'package:blog/home.dart';
 import 'package:blog/profile.dart';
 import 'package:blog/splash.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -130,13 +131,80 @@ class MyApp extends StatelessWidget {
       //   Positioned.fill(child: const HomeScreen()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation()),
       // ]),
-      home: ProfileScreen(),
+      home: MainScreen(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
+const int homeIndex = 0;
+const int articleIndex = 1;
+const int searchIndex = 2;
+const int menuIndex = 3;
+
+const double bottomNavigationHeight = 65;
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int selectedBottomNavigationIndex = homeIndex;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(children: [
+        Positioned.fill(
+          bottom: bottomNavigationHeight,
+          child: IndexedStack(
+            index: selectedBottomNavigationIndex,
+            children: [
+              HomeScreen(),
+              ArticleScreen(),
+              SearchScreen(),
+              ProfileScreen(),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: _BottomNavigation(
+            selectedIndex: selectedBottomNavigationIndex,
+            onTap: (int index) {
+              setState(() {
+                selectedBottomNavigationIndex = index;
+              });
+            },
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Search Screen Coming Soon!'),
+    );
+  }
+}
+
 class _BottomNavigation extends StatelessWidget {
+  final Function(int index) onTap;
+  final int selectedIndex;
+
+  const _BottomNavigation(
+      {super.key, required this.onTap, required this.selectedIndex});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -148,32 +216,50 @@ class _BottomNavigation extends StatelessWidget {
             left: 0,
             bottom: 0,
             child: Container(
-              height: 65,
+              height: bottomNavigationHeight,
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     blurRadius: 20, color: Color(0x9B8487).withOpacity(0.3))
               ]),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _BottomNavigationItem(
-                      iconFileName: 'Home.png',
-                      activeIconFileName: 'Home.png',
+                      onTap: () {
+                        onTap(homeIndex);
+                      },
+                      svgIcon: Assets.img.icons.home,
+                      isActive: selectedIndex == homeIndex,
+                      // iconFileName: 'Home.svg',
+                      // activeIconFileName: 'Home.svg',
                       title: 'Home'),
                   _BottomNavigationItem(
-                      iconFileName: 'Articles.png',
-                      activeIconFileName: 'Articles.png',
+                      onTap: () {
+                        onTap(articleIndex);
+                      },
+                      svgIcon: Assets.img.icons.article,
+                      isActive: selectedIndex == articleIndex,
+                      // iconFileName: 'Articles.png',
+                      // activeIconFileName: 'Articles.png',
                       title: 'Articles'),
-                  SizedBox(
-                    width: 8,
-                  ),
+                  Expanded(child: Container()),
                   _BottomNavigationItem(
-                      iconFileName: 'Search.png',
-                      activeIconFileName: 'Search.png',
+                      onTap: () {
+                        onTap(searchIndex);
+                      },
+                      svgIcon: Assets.img.icons.search,
+                      isActive: selectedIndex == searchIndex,
+                      // iconFileName: 'Search.png',
+                      // activeIconFileName: 'Search.png',
                       title: 'Search'),
                   _BottomNavigationItem(
-                      iconFileName: 'Menu.png',
-                      activeIconFileName: 'Menu.png',
+                      onTap: () {
+                        onTap(menuIndex);
+                      },
+                      svgIcon: Assets.img.icons.menu,
+                      isActive: selectedIndex == menuIndex,
+                      // iconFileName: 'Menu.png',
+                      // activeIconFileName: 'Menu.png',
                       title: 'Menu'),
                 ],
               ),
@@ -200,30 +286,53 @@ class _BottomNavigation extends StatelessWidget {
 }
 
 class _BottomNavigationItem extends StatelessWidget {
-  final String iconFileName;
-  final String activeIconFileName;
+  // final String iconFileName;
+  // final String activeIconFileName;
+  final SvgGenImage svgIcon;
   final String title;
+  final bool isActive;
+  final Function() onTap;
 
   const _BottomNavigationItem(
       {super.key,
-      required this.iconFileName,
-      required this.activeIconFileName,
-      required this.title});
+      // required this.iconFileName,
+      // required this.activeIconFileName,
+      required this.title,
+      required this.onTap,
+      required this.isActive,
+      required this.svgIcon});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('assets/img/icons/$iconFileName'),
-        SizedBox(
-          height: 4,
+    final themeData = Theme.of(context);
+    return Expanded(
+      child: InkWell(
+        onTap: onTap,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            svgIcon.svg(
+                width: 32,
+                height: 32,
+                colorFilter: ColorFilter.mode(
+                    isActive
+                        ? themeData.colorScheme.primary
+                        : Color(0xff7B8BB2),
+                    BlendMode.srcIn)),
+            // Image.asset('assets/img/icons/$iconFileName'),
+            SizedBox(
+              height: 4,
+            ),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.bodySmall!.apply(
+                  color: isActive
+                      ? themeData.colorScheme.primary
+                      : themeData.textTheme.bodySmall!.color),
+            ),
+          ],
         ),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-      ],
+      ),
     );
   }
 }
