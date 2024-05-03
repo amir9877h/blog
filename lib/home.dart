@@ -6,7 +6,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -60,9 +59,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _CategoryList extends StatelessWidget {
-  const _CategoryList({
-    super.key,
-  });
+  const _CategoryList();
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +90,6 @@ class _CategoryList extends StatelessWidget {
 class _CategoryItem extends StatelessWidget {
   final Category category;
   const _CategoryItem({
-    super.key,
     required this.category,
   });
 
@@ -107,17 +103,17 @@ class _CategoryItem extends StatelessWidget {
           left: 56,
           bottom: 16,
           child: Container(
-            decoration: BoxDecoration(boxShadow: [
+            decoration: const BoxDecoration(boxShadow: [
               BoxShadow(blurRadius: 20, color: Color(0xaa0D253C))
             ]),
           ),
         ),
         Positioned.fill(
           child: Container(
-            margin: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             foregroundDecoration: BoxDecoration(
               borderRadius: BorderRadius.circular(32),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.center,
                   colors: [Color(0xff0D253C), Colors.transparent]),
@@ -151,7 +147,6 @@ class _CategoryItem extends StatelessWidget {
 
 class _StoryList extends StatelessWidget {
   const _StoryList({
-    super.key,
     required this.stories,
   });
 
@@ -165,7 +160,7 @@ class _StoryList extends StatelessWidget {
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(32, 8, 32, 0),
+          padding: const EdgeInsets.fromLTRB(32, 8, 32, 0),
           itemCount: stories.length,
           itemBuilder: (context, index) {
             final story = stories[index];
@@ -177,7 +172,6 @@ class _StoryList extends StatelessWidget {
 
 class _Story extends StatelessWidget {
   const _Story({
-    super.key,
     required this.story,
   });
 
@@ -186,7 +180,7 @@ class _Story extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
       child: Column(
         children: [
           Stack(
@@ -204,7 +198,7 @@ class _Story extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(story.name),
@@ -219,16 +213,16 @@ class _Story extends StatelessWidget {
       height: 68,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24),
-          gradient: LinearGradient(begin: Alignment.topLeft, colors: [
+          gradient: const LinearGradient(begin: Alignment.topLeft, colors: [
             Color(0xff376AED),
             Color(0xff49B0E2),
             Color(0xff9CECFB),
           ])),
       child: Container(
-        margin: EdgeInsets.all(3),
+        margin: const EdgeInsets.all(3),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(21)),
-        padding: EdgeInsets.all(3),
+        padding: const EdgeInsets.all(3),
         child: _profileImage(),
       ),
       // child: Image.asset('assets/img/stories/story_01.jpg'),
@@ -242,10 +236,10 @@ class _Story extends StatelessWidget {
       child: DottedBorder(
         borderType: BorderType.RRect,
         strokeWidth: 2,
-        radius: Radius.circular(24),
-        padding: EdgeInsets.all(4),
-        color: Color(0xff7b8bb2),
-        dashPattern: [8, 3, 5, 3], // [width, gap]
+        radius: const Radius.circular(24),
+        padding: const EdgeInsets.all(4),
+        color: const Color(0xff7b8bb2),
+        dashPattern: const [8, 3, 5, 3], // [width, gap]
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
@@ -266,7 +260,7 @@ class _Story extends StatelessWidget {
 
 class _PostList extends StatelessWidget {
 // const _PostList({Key? key}):super(key: key);
-  const _PostList({super.key});
+  const _PostList();
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +276,7 @@ class _PostList extends StatelessWidget {
             children: [
               Text('Latest News',
                   style: Theme.of(context).textTheme.headlineSmall),
-              TextButton(onPressed: () {}, child: Text('More')),
+              TextButton(onPressed: () {}, child: const Text('More')),
             ],
           ),
         ),
@@ -290,7 +284,7 @@ class _PostList extends StatelessWidget {
             itemCount: posts.length,
             itemExtent: 141,
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             itemBuilder: (context, index) {
               final post = posts[index];
               return Post(post: post);
@@ -312,14 +306,14 @@ class Post extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ArticleScreen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ArticleScreen()));
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+        margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [BoxShadow(blurRadius: 10, color: Color(0x1a5282ff))],
+          boxShadow: const [BoxShadow(blurRadius: 10, color: Color(0x1a5282ff))],
         ),
         child: Row(
           children: [
@@ -327,7 +321,7 @@ class Post extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 child:
                     Image.asset('assets/img/posts/small/${post.imageFileName}', width: 120,)),
-            SizedBox(
+            const SizedBox(
               width: 16,
             ),
             Expanded(
@@ -337,20 +331,20 @@ class Post extends StatelessWidget {
                 children: [
                   Text(
                     post.caption,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: MyApp.defaultFontFamily,
                         color: Color(0xff376AED),
                         fontWeight: FontWeight.w700,
                         fontSize: 14),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text(
                     post.title,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                   Row(
@@ -361,14 +355,14 @@ class Post extends StatelessWidget {
                         size: 16,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
                         post.likes,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Icon(
@@ -376,7 +370,7 @@ class Post extends StatelessWidget {
                         size: 16,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 4,
                       ),
                       Text(
@@ -385,7 +379,7 @@ class Post extends StatelessWidget {
                       ),
                       Expanded(
                           child: Container(
-                        margin: EdgeInsets.only(right: 16),
+                        margin: const EdgeInsets.only(right: 16),
                         alignment: Alignment.centerRight,
                         child: post.isBookmarked
                             ? Icon(

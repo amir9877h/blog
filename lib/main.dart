@@ -1,15 +1,10 @@
 import 'package:blog/article.dart';
-import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
 import 'package:blog/home.dart';
 import 'package:blog/profile.dart';
 import 'package:blog/splash.dart';
-import 'package:dotted_border/dotted_border.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -28,9 +23,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final primaryTextColor = Color(0xff0D253C);
-    final secondryTextColor = Color(0xff2D4379);
-    final primaryColor = Color(0xff376AED);
+    const primaryTextColor = Color(0xff0D253C);
+    const secondryTextColor = Color(0xff2D4379);
+    const primaryColor = Color(0xff376AED);
 // Assets.img.
 
     return MaterialApp(
@@ -52,15 +47,15 @@ class MyApp extends StatelessWidget {
           //
           // This works for code too, not just values: Most code changes can be
           // tested with just a hot reload.
-          snackBarTheme: SnackBarThemeData(
+          snackBarTheme: const SnackBarThemeData(
             backgroundColor: primaryColor,
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
               titleSpacing: 32,
               // elevation: 0, //for removing shadow
               backgroundColor: Colors.white,
               foregroundColor: primaryTextColor),
-          colorScheme: ColorScheme.light(
+          colorScheme: const ColorScheme.light(
             primary: primaryColor,
             onPrimary: Colors.white,
             onSurface: primaryTextColor,
@@ -73,7 +68,7 @@ class MyApp extends StatelessWidget {
           textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
                   foregroundColor: Colors.lightBlue,
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       fontFamily: defaultFontFamily))
@@ -86,7 +81,7 @@ class MyApp extends StatelessWidget {
               //   ))
               // )
               ),
-          textTheme: TextTheme(
+          textTheme: const TextTheme(
               headlineSmall: TextStyle(
                 fontFamily: defaultFontFamily,
                 color: primaryTextColor,
@@ -131,7 +126,7 @@ class MyApp extends StatelessWidget {
       //   Positioned.fill(child: const HomeScreen()),
       //   Positioned(bottom: 0, right: 0, left: 0, child: _BottomNavigation()),
       // ]),
-      home: MainScreen(),
+      home: const SplashScreen(),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -156,10 +151,10 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<int> _history = [];
 
-  GlobalKey<NavigatorState> _homeKey = GlobalKey();
-  GlobalKey<NavigatorState> _articleKey = GlobalKey();
-  GlobalKey<NavigatorState> _searchKey = GlobalKey();
-  GlobalKey<NavigatorState> _profileKey = GlobalKey();
+  final GlobalKey<NavigatorState> _homeKey = GlobalKey();
+  final GlobalKey<NavigatorState> _articleKey = GlobalKey();
+  final GlobalKey<NavigatorState> _searchKey = GlobalKey();
+  final GlobalKey<NavigatorState> _profileKey = GlobalKey();
 
   late final map = {
     homeIndex: _homeKey,
@@ -194,15 +189,15 @@ class _MainScreenState extends State<MainScreen> {
             child: IndexedStack(
               index: selectedBottomNavigationIndex,
               children: [
-                _navigator(_homeKey, homeIndex, HomeScreen()),
-                _navigator(_articleKey, articleIndex, ArticleScreen()),
+                _navigator(_homeKey, homeIndex, const HomeScreen()),
+                _navigator(_articleKey, articleIndex, const ArticleScreen()),
                 _navigator(
                     _searchKey,
                     searchIndex,
-                    SearchScreen(
+                    const SearchScreen(
                       tabName: 'Search',
                     )),
-                _navigator(_profileKey, menuIndex, ProfileScreen()),
+                _navigator(_profileKey, menuIndex, const ProfileScreen()),
                 // HomeScreen(),
                 // ArticleScreen(),
                 // SearchScreen(),
@@ -263,7 +258,7 @@ class SearchScreen extends StatelessWidget {
                         screenNumber: screenNumber + 1,
                       )));
             },
-            child: Text('Increase ME!'))
+            child: const Text('Increase ME!'))
       ]),
     );
   }
@@ -274,11 +269,11 @@ class _BottomNavigation extends StatelessWidget {
   final int selectedIndex;
 
   const _BottomNavigation(
-      {super.key, required this.onTap, required this.selectedIndex});
+      {required this.onTap, required this.selectedIndex});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 85,
       child: Stack(
         children: [
@@ -290,7 +285,7 @@ class _BottomNavigation extends StatelessWidget {
               height: bottomNavigationHeight,
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
-                    blurRadius: 20, color: Color(0x9B8487).withOpacity(0.3))
+                    blurRadius: 20, color: const Color(0x009b8487).withOpacity(0.3))
               ]),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -344,7 +339,7 @@ class _BottomNavigation extends StatelessWidget {
               child: Container(
                   height: 65,
                   decoration: BoxDecoration(
-                      color: Color(0xff376AED),
+                      color: const Color(0xff376AED),
                       borderRadius: BorderRadius.circular(32.5),
                       border: Border.all(color: Colors.white, width: 4)),
                   child: Image.asset('assets/img/icons/plus.png')),
@@ -365,10 +360,7 @@ class _BottomNavigationItem extends StatelessWidget {
   final Function() onTap;
 
   const _BottomNavigationItem(
-      {super.key,
-      // required this.iconFileName,
-      // required this.activeIconFileName,
-      required this.title,
+      {required this.title,
       required this.onTap,
       required this.isActive,
       required this.svgIcon});
@@ -388,10 +380,10 @@ class _BottomNavigationItem extends StatelessWidget {
                 colorFilter: ColorFilter.mode(
                     isActive
                         ? themeData.colorScheme.primary
-                        : Color(0xff7B8BB2),
+                        : const Color(0xff7B8BB2),
                     BlendMode.srcIn)),
             // Image.asset('assets/img/icons/$iconFileName'),
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
             Text(

@@ -1,11 +1,6 @@
 import 'package:blog/gen/assets.gen.dart';
-import 'package:flutter/animation.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:blog/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -33,12 +28,12 @@ class _AuthScreenState extends State<AuthScreen> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-                padding: EdgeInsets.only(bottom: 16, top: 16),
+                padding: const EdgeInsets.only(bottom: 16, top: 16),
                 child: Assets.img.icons.logo.svg(width: 120)),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32)),
                   color: themeData.colorScheme.primary,
@@ -51,25 +46,31 @@ class _AuthScreenState extends State<AuthScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
                                 selectedTabIndex = loginTab;
                               });
                             },
                             child: Text(
                               'login'.toUpperCase(),
-                              style: tabTextStyle.apply(color: selectedTabIndex == loginTab? Colors.white:Colors.white54),
+                              style: tabTextStyle.apply(
+                                  color: selectedTabIndex == loginTab
+                                      ? Colors.white
+                                      : Colors.white54),
                             ),
                           ),
                           TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
                                 selectedTabIndex = signUpTab;
                               });
                             },
                             child: Text(
                               'Sign up'.toUpperCase(),
-                              style: tabTextStyle.apply(color: selectedTabIndex == signUpTab? Colors.white:Colors.white54),
+                              style: tabTextStyle.apply(
+                                  color: selectedTabIndex == signUpTab
+                                      ? Colors.white
+                                      : Colors.white54),
                             ),
                           )
                         ],
@@ -79,14 +80,16 @@ class _AuthScreenState extends State<AuthScreen> {
                         child: Container(
                       decoration: BoxDecoration(
                         color: themeData.colorScheme.surface,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(32),
                             topRight: Radius.circular(32)),
                       ),
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.all(32),
-                          child: selectedTabIndex==loginTab? _Login(themeData: themeData):_SignUp(themeData: themeData),
+                          padding: const EdgeInsets.all(32),
+                          child: selectedTabIndex == loginTab
+                              ? _Login(themeData: themeData)
+                              : _SignUp(themeData: themeData),
                         ),
                       ),
                     ))
@@ -103,7 +106,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
 class _Login extends StatelessWidget {
   const _Login({
-    super.key,
     required this.themeData,
   });
 
@@ -118,21 +120,21 @@ class _Login extends StatelessWidget {
           'Welcome back',
           style: themeData.textTheme.headlineMedium,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
           'Sing in with your account',
           style: themeData.textTheme.titleMedium!.apply(fontSizeFactor: 0.8),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Username')),
         ),
-        PasswordTextField(),
-        SizedBox(
+        const PasswordTextField(),
+        const SizedBox(
           height: 24,
         ),
         ElevatedButton(
@@ -142,36 +144,39 @@ class _Login extends StatelessWidget {
               ),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)))),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const MainScreen()));
+          },
           child: Text('Login'.toUpperCase()),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text('Forget your password?'),
-            TextButton(onPressed: () {}, child: Text('Reset password')),
+            const Text('Forget your password?'),
+            TextButton(onPressed: () {}, child: const Text('Reset password')),
           ],
         ),
         Center(
           child: Text(
             'Or Sign In With'.toUpperCase(),
-            style: TextStyle(letterSpacing: 2),
+            style: const TextStyle(letterSpacing: 2),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 18,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(),
+            const SizedBox(),
             Assets.img.icons.google.image(width: 48),
             Assets.img.icons.facebook.image(width: 48),
             Assets.img.icons.twitter.image(width: 48),
-            SizedBox(),
+            const SizedBox(),
           ],
         )
       ],
@@ -181,7 +186,6 @@ class _Login extends StatelessWidget {
 
 class _SignUp extends StatelessWidget {
   const _SignUp({
-    super.key,
     required this.themeData,
   });
 
@@ -196,27 +200,27 @@ class _SignUp extends StatelessWidget {
           'Welcome to our blog',
           style: themeData.textTheme.headlineMedium,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
           'Please enter your information',
           style: themeData.textTheme.titleMedium!.apply(fontSizeFactor: 0.8),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Full Name')),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Username')),
         ),
-        PasswordTextField(),
-        SizedBox(
+        const PasswordTextField(),
+        const SizedBox(
           height: 24,
         ),
         ElevatedButton(
@@ -226,30 +230,32 @@ class _SignUp extends StatelessWidget {
               ),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)))),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const MainScreen()));
+          },
           child: Text('Sign up'.toUpperCase()),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
-
         Center(
           child: Text(
             'Or Sign up With'.toUpperCase(),
-            style: TextStyle(letterSpacing: 2),
+            style: const TextStyle(letterSpacing: 2),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 18,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(),
+            const SizedBox(),
             Assets.img.icons.google.image(width: 48),
             Assets.img.icons.facebook.image(width: 48),
             Assets.img.icons.twitter.image(width: 48),
-            SizedBox(),
+            const SizedBox(),
           ],
         )
       ],
@@ -276,7 +282,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       enableSuggestions: false,
       autocorrect: false,
       decoration: InputDecoration(
-          label: Text('Password'),
+          label: const Text('Password'),
           suffix: InkWell(
             // style: ButtonStyle(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
             onTap: () {

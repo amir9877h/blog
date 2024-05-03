@@ -1,7 +1,6 @@
 import 'package:blog/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ArticleScreen extends StatelessWidget {
   const ArticleScreen({super.key});
@@ -23,25 +22,27 @@ class ArticleScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Assets.img.icons.thumbs.svg(),
-              SizedBox(
+              const SizedBox(
                 width: 4,
               ),
-              Text('2.1K'),
+              const Text('2.1K'),
             ],
           ),
         ),
       ),
       backgroundColor: themeData.colorScheme.surface,
       body: Stack(children: [
-        CustomScrollView(slivers: [
+        CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
           SliverAppBar(
             // pinned: true,
             // floating: true,
-            title: Text('Article'),
+            title: const Text('Article'),
             actions: [
               IconButton(
-                  onPressed: () {}, icon: Icon(Icons.more_horiz_rounded)),
-              SizedBox(
+                  onPressed: () {}, icon: const Icon(Icons.more_horiz_rounded)),
+              const SizedBox(
                 width: 16,
               )
             ],
@@ -51,14 +52,14 @@ class ArticleScreen extends StatelessWidget {
             delegate: SliverChildListDelegate.fixed(
               [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
+                  padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                   child: Text(
                     'Article title here!',
                     style: themeData.textTheme.headlineMedium,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
+                  padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -67,7 +68,7 @@ class ArticleScreen extends StatelessWidget {
                         child: Assets.img.stories.story9
                             .image(width: 48, height: 48, fit: BoxFit.cover),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 16,
                       ),
                       Expanded(
@@ -104,19 +105,19 @@ class ArticleScreen extends StatelessWidget {
                   ),
                 ),
                 ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(32),
                         topRight: Radius.circular(32)),
                     child: Assets.img.background.singlePost.image()),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(32, 32, 32, 16),
+                  padding: const EdgeInsets.fromLTRB(32, 32, 32, 16),
                   child: Text(
                     'main title of your Article...',
                     style: themeData.textTheme.headlineSmall,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(32, 0, 32, 32),
+                  padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pellentesque id nibh tortor id. Nunc consequat interdum varius sit amet mattis vulputate enim. Vestibulum mattis ullamcorper velit sed ullamcorper. Orci eu lobortis elementum nibh tellus molestie nunc non. Sagittis id consectetur purus ut faucibus pulvinar elementum integer enim. Tellus in hac habitasse platea. Odio aenean sed adipiscing diam donec adipiscing tristique. In vitae turpis massa sed elementum tempus egestas sed sed. Congue eu consequat ac felis donec et odio.\nPharetra pharetra massa massa ultricies mi quis hendrerit dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames. Quam vulputate dignissim suspendisse in est ante in nibh. Lobortis mattis aliquam faucibus purus in massa tempor. Lectus sit amet est placerat. Nulla facilisi cras fermentum odio eu feugiat pretium. Dictum varius duis at consectetur lorem donec massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames. Consequat ac felis donec et odio pellentesque. Vitae semper quis lectus nulla at volutpat. Eget nulla facilisi etiam dignissim diam quis enim. Feugiat nisl pretium fusce id velit ut. Odio morbi quis commodo odio. Diam maecenas ultricies mi eget. Nec dui nunc mattis enim ut tellus elementum sagittis. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant.\nCras semper auctor neque vitae tempus quam. Neque vitae tempus quam pellentesque nec nam. Eget mauris pharetra et ultrices neque ornare aenean. Semper viverra nam libero justo laoreet sit amet. Nibh venenatis cras sed felis eget velit aliquet sagittis id. Ut venenatis tellus in metus vulputate eu scelerisque. Ultricies lacus sed turpis tincidunt. Tincidunt id aliquet risus feugiat in ante metus dictum at. Lectus proin nibh nisl condimentum id. Condimentum lacinia quis vel eros donec ac odio. Leo vel orci porta non pulvinar neque laoreet suspendisse interdum. Libero id faucibus nisl tincidunt eget nullam non nisi est. Turpis egestas maecenas pharetra convallis posuere. Egestas egestas fringilla phasellus faucibus scelerisque eleifend. Diam volutpat commodo sed egestas egestas fringilla. Dictum non consectetur a erat nam at lectus urna.',
                     style: themeData.textTheme.bodyMedium,

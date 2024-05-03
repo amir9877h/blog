@@ -1,10 +1,8 @@
 import 'package:blog/auth.dart';
 import 'package:blog/data.dart';
 import 'package:blog/gen/assets.gen.dart';
-import 'package:blog/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -42,7 +40,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           children: [
             Expanded(
               child: Padding(
-                  padding: EdgeInsets.only(top: 24, bottom: 8),
+                  padding: const EdgeInsets.only(top: 24, bottom: 8),
                   child: Assets.img.background.onboarding.image()),
             ),
             Container(
@@ -54,7 +52,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     BoxShadow(
                         blurRadius: 20, color: Colors.black.withOpacity(0.1)),
                   ],
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32))),
               child: Column(
@@ -65,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           controller: _pageController,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: EdgeInsets.all(32),
+                              padding: const EdgeInsets.all(32),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -73,7 +71,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                     items[index].title,
                                     style: themeData.textTheme.headlineMedium,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 16,
                                   ),
                                   Text(
@@ -86,7 +84,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             );
                           })),
                   Container(
-                    padding: EdgeInsets.only(left: 32, right: 32, bottom: 8),
+                    padding: const EdgeInsets.only(left: 32, right: 32, bottom: 8),
                     height: 60,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +102,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         ElevatedButton(
                             style: ButtonStyle(
                                 minimumSize:
-                                    MaterialStateProperty.all(Size(84, 60)),
+                                    MaterialStateProperty.all(const Size(84, 60)),
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
@@ -112,10 +110,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             onPressed: () {
                               if (page == items.length - 1) {
                                 Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (context) => AuthScreen())
+                                MaterialPageRoute(builder: (context) => const AuthScreen())
                               );
                               }else{
-                                _pageController.animateToPage(page + 1, duration: Duration(milliseconds: 500), curve: Curves.decelerate);
+                                _pageController.animateToPage(page + 1, duration: const Duration(milliseconds: 500), curve: Curves.decelerate);
                               }
                             },
                             child: Icon(page != items.length - 1
